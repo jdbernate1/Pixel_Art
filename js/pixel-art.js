@@ -29,6 +29,8 @@ var colorElegido;
 
 var indicadorColor = document.getElementById('indicador-de-color');
 
+var colorPersonalizado = document.getElementById('color-personalizado');
+
 function actualizarPaleta(lista) {
   for (var i = 0; i < lista.length; i++) {
     var el = document.createElement('div')
@@ -56,9 +58,14 @@ function elegirColor(){
   function tomarColor(e){
     indicadorColor.style.backgroundColor = e.target.style.backgroundColor;
     // colorElegido = e.target.style.backgroundColor;
+  }
+}
 
+function pintar(){
+  grilla_pixeles.addEventListener("click",pintarPixel)
 
-
+  function pintarPixel(e){
+    e.target.style.backgroundColor = indicadorColor.style.backgroundColor;
   }
 }
 
@@ -66,13 +73,14 @@ function elegirColor(){
 
 // Variable para guardar el elemento 'color-personalizado'
 // Es decir, el que se elige con la rueda de color.
-var colorPersonalizado = document.getElementById('color-personalizado');
+
 
 colorPersonalizado.addEventListener('change', 
   (function() {
     // Se guarda el color de la rueda en colorActual
     colorActual = colorPersonalizado.value;
     // Completar para que cambie el indicador-de-color al colorActual
+    indicadorColor.style.backgroundColor = colorActual;
 
 
   })
@@ -82,6 +90,8 @@ colorPersonalizado.addEventListener('change',
 function iniciar(){
   actualizarPaleta(nombreColores);
   crearGrilla();
+  elegirColor();
+  pintar();
 }
 
 
