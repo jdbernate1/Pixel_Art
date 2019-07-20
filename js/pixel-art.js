@@ -25,11 +25,29 @@ var paleta = document.getElementById('paleta')
 
 var grilla_pixeles=document.getElementById('grilla-pixeles')
 
+
 var colorElegido;
+var nombreColorElegido;
 
 var indicadorColor = document.getElementById('indicador-de-color');
 
+var indicadorColorTexto = document.getElementById('indicador-de-color-mensaje');
+
 var colorPersonalizado = document.getElementById('color-personalizado');
+
+var mouseApretado = false;
+
+var botonGuardar = document.getElementById('guardar');
+
+var botonBorrar = document.getElementById('borrar');
+
+var batmanImg = document.getElementById('batman');
+var mujerMaravillaImg = document.getElementById('wonder');
+var flashImg = document.getElementById('flash');
+var invisibleImg = document.getElementById('invisible');
+
+
+
 
 function actualizarPaleta(lista) {
   for (var i = 0; i < lista.length; i++) {
@@ -52,23 +70,22 @@ function crearGrilla(){
 }
 
 function elegirColor(){
-  var color = document.getElementById('paleta')
+  var color = document.getElementById('paleta');
   color.addEventListener("click", tomarColor);
 
   function tomarColor(e){
     indicadorColor.style.backgroundColor = e.target.style.backgroundColor;
-    // colorElegido = e.target.style.backgroundColor;
-  }
+    colorElegido = e.target.style.backgroundColor;
+    indicadorColorTexto.textContent="Pincel Color "+colorElegido;
+   }
 }
 
-function pintar(){
-  grilla_pixeles.addEventListener("click",pintarPixel)
 
-  function pintarPixel(e){
+grilla_pixeles.addEventListener("click",pintarPixel)
+
+function pintarPixel(e){
     e.target.style.backgroundColor = indicadorColor.style.backgroundColor;
   }
-}
-
 
 
 // Variable para guardar el elemento 'color-personalizado'
@@ -81,19 +98,132 @@ colorPersonalizado.addEventListener('change',
     colorActual = colorPersonalizado.value;
     // Completar para que cambie el indicador-de-color al colorActual
     indicadorColor.style.backgroundColor = colorActual;
-
+    indicadorColorTexto.textContent = indicadorColor.style.backgroundColor;
 
   })
 );
 
 
-function iniciar(){
+grilla_pixeles.addEventListener("mousedown", apretar);
+grilla_pixeles.addEventListener("mouseup", suelto);
+grilla_pixeles.addEventListener("mouseover", mover);
+
+function apretar(e){
+  mouseApretado=true;
+}
+
+function suelto(e){
+  mouseApretado=false;
+}
+
+function mover(e) {
+  if (mouseApretado) {
+    pintarPixel(e);
+
+     }
+  }
+
+
+
+// // Abre una ventana para guardar nuestro arte en un archivo pixel-art.png
+// function guardarPixelArt() {
+//   html2canvas($("#grilla-pixeles") , {
+//     onrendered: function(canvas) {
+//       theCanvas = canvas;
+//       canvas.toBlob(function(blob) {
+//         saveAs(blob, "pixel-art.png");
+//       });
+//     }
+//   });
+// }
+
+// Carga a un superheroe predefinido
+// function cargarSuperheroe(superheroe) {
+//   var $pixeles = $("#grilla-pixeles div");
+//   for (var i = 0; i < superheroe.length; i++) {
+//     $pixeles[i].style.backgroundColor = superheroe[i];
+//   }
+// }
+
+
+botonGuardar.addEventListener("click", guardarPixelArt); //esta funcion se encuentra en recursos.js
+
+//Hago mi adaptación de la función de superheroes sin Jquery
+function CargarHeroe(superheroe){
+  var grilla = document.querySelectorAll("#grilla-pixeles div" );
+  for (var i = 0; i < grilla.length; i++) {
+    grilla[i].style.backgroundColor = superheroe[i];
+  }
+}
+
+
+
+batmanImg.addEventListener("click", function(){
+  CargarHeroe(batman);
+})
+
+mujerMaravillaImg.addEventListener("click", function(){
+  CargarHeroe(wonder);
+})
+
+flashImg.addEventListener("click", function(){
+  CargarHeroe(flash);
+})
+
+invisibleImg.addEventListener("click", function(){
+  CargarHeroe(invisible);
+})
+
+
+// function Borrar(){
+//   var grilla = document.querySelectorAll("#grilla-pixeles div" );
+//   for (var i = 0; i < grilla.length; i++) {
+//     grilla[i].style.backgroundColor = 'white';
+//   }
+// }
+
+
+// botonBorrar.addEventListener("click", function(){
+//   Borrar();
+// })
+
+
+
+
+
+// $("#borrar").click (function () {
+//   var $pixelBorrado = $("#grilla-pixeles div");
+//   $pixelBorrado.animate({"opacity": "0.5", "background-color": "white"}, 1000)
+
+// });
+
+
+$(document).ready(function(){
+const borrarTodo = () => {
+ let pixelesParaBorrado = $("#grilla-pixeles div");
+ $("#borrar").click(() => {
+   pixelesParaBorrado.each(function () {
+     $(this).animate({
+       backgroundColor: "#FFF"
+       }, 1000)
+     })
+   }
+ )
+}
+})
+
+
+window.onload = function(){
   actualizarPaleta(nombreColores);
   crearGrilla();
   elegirColor();
-  pintar();
 }
 
+// function iniciar(){
+//   actualizarPaleta(nombreColores);
+//   crearGrilla();
+//   elegirColor();
+// }
 
 
 
