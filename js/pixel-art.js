@@ -175,42 +175,21 @@ invisibleImg.addEventListener("click", function(){
 })
 
 
-// function Borrar(){
-//   var grilla = document.querySelectorAll("#grilla-pixeles div" );
-//   for (var i = 0; i < grilla.length; i++) {
-//     grilla[i].style.backgroundColor = 'white';
-//   }
-// }
-
-
-// botonBorrar.addEventListener("click", function(){
-//   Borrar();
-// })
-
-
-
-
-
-// $("#borrar").click (function () {
-//   var $pixelBorrado = $("#grilla-pixeles div");
-//   $pixelBorrado.animate({"opacity": "0.5", "background-color": "white"}, 1000)
-
-// });
-
-
-$(document).ready(function(){
-const borrarTodo = () => {
- let pixelesParaBorrado = $("#grilla-pixeles div");
- $("#borrar").click(() => {
-   pixelesParaBorrado.each(function () {
-     $(this).animate({
-       backgroundColor: "#FFF"
-       }, 1000)
-     })
-   }
- )
+function Borrar(){
+  var grilla = document.querySelectorAll("#grilla-pixeles div" );
+  for (var i = 0; i < grilla.length; i++) {
+    grilla[i].style.backgroundColor = 'white';
+  }
 }
+
+
+botonBorrar.addEventListener("click", function(){
+  Borrar();
 })
+
+
+
+
 
 
 window.onload = function(){
@@ -219,11 +198,6 @@ window.onload = function(){
   elegirColor();
 }
 
-// function iniciar(){
-//   actualizarPaleta(nombreColores);
-//   crearGrilla();
-//   elegirColor();
-// }
 
 
 
